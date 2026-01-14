@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="./styles.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit-id.js" crossorigin integrity="sha384-...."></script>
+
+    <title>GWAPAFFECTION-CLOTHING</title>
+
+    <style>
+
+        /* Navbar Styles */
+
+        .navbar {
+
+            background-color: black; /* Dark background color */
+
+            color: black; /* Text color */
+
+            padding: 20px 0; /* Padding for the navbar */
+
+            position: fixed; /* Fixed position */
+
+            top: 0; /* Stick to the top */
+
+            width: 100%; /* Full width */
+
+            z-index: 1000; /* Ensure it's above other content */
+
+            overflow: hidden; /* Hide overflowing content */
+
+            box-shadow: 0 0 5px rgba(0,0,0,0.2); /* Add a shadow effect */
+
+        }
+
+
+        .container {
+
+            width: 90%; /* Container width */
+
+            margin: 0 auto; /* Center the container */
+
+            display: flex; /* Flexbox for alignment */
+
+            justify-content: space-between; /* Space between logo and links */
+
+            align-items: center; /* Center items vertically */
+
+            padding: 10px; /* Padding for the container */
+
+        }
+
+
+        .logo {
+
+            font-size: 24px; /* Logo font size */
+
+            font-weight: bold; /* Bold logo */
+
+            color: maroon; /* White text color */
+
+            text-decoration: none; /* Remove underline */
+
+            transition: color 0.3s; /* Smooth transition for hover effect */
+
+            cursor: pointer; /* Pointer cursor for hover effect */
+
+            font-family: 'Times New Roman', Times, serif;
+
+            letter-spacing: 1px; /* Space between letters */
+
+        }
+
+
+        .nav-links {
+
+            list-style: none; /* Remove bullet points */
+
+            display: flex; /* Flexbox for horizontal layout */
+
+            gap: 20px; /* Space between links */
+
+            margin: 0; /* Remove default margin */
+
+            padding: 0; /* Remove default padding */
+
+            font-family: 'Times New Roman', Times, serif;
+
+            font-size: 18px; /* Link font size */
+
+            letter-spacing: 1px; /* Space between letters */
+
+            font-weight: bold; /* Bold font weight */
+
+        }
+
+
+        .nav-links li {
+
+            display: inline; /* Inline display for list items */
+
+            position: relative; /* Position relative for dropdown */
+
+            overflow: hidden; /* Hide overflowing content */
+
+        }
+
+
+        .nav-links a {
+
+            color: brown; /* Link color */
+
+            text-decoration: none; /* Remove underline */
+
+            padding: 8px 16px; /* Padding for links */
+
+            transition: background-color 0.3s; /* Smooth transition for hover effect */
+
+        }
+
+
+        .nav-links a:hover {
+
+            background-color: red; /* Darker background on hover */
+
+            border-radius: 10px; /* Rounded corners */
+
+            box-shadow: 0 0 5px rgba(0,0,0,0.2); /* Add a shadow effect */
+
+        }
+
+
+        /* Dropdown Styles */
+
+        .dropdown {
+
+            display: none; /* Hide dropdown by default */
+
+            position: absolute; /* Position it absolutely */
+
+            background-color: white; /* Background color for dropdown */
+
+            min-width: 160px; /* Minimum width */
+
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2); /* Shadow for dropdown */
+
+            z-index: 1; /* Ensure dropdown is above other content */
+
+        }
+
+
+        .nav-links li:hover .dropdown {
+
+            display: block; /* Show dropdown on hover */
+
+        }
+
+
+        .dropdown a {
+
+            color: black; /* Link color in dropdown */
+
+            padding: 12px 16px; /* Padding for dropdown links */
+
+            text-decoration: none; /* Remove underline */
+
+            display: block; /* Block display for links */
+
+        }
+
+
+        .dropdown a:hover {
+
+            background-color: #441818; /* Background color on hover */
+
+        }
+
+
+        /* Cart Styles */
+
+        .cart-items {
+
+            margin-top: 20px;
+
+            padding: 20px;
+
+            background-color: #f9f9f9;
+
+            border: 1px solid #ccc;
+
+        }
+
+
+        .cart-item {
+
+            display: flex;
+
+            align-items: center;
+
+            margin-bottom: 15 px;
+
+        }
+
+
+        .cart-item img {
+
+            width: 100px; /* Set a fixed width for images */
+
+            height: auto; /* Maintain aspect ratio */
+
+            margin-right: 15px; /* Space between image and text */
+
+        }
+
+
+        .cart-item-details {
+
+            flex-grow: 1; /* Allow details to take available space */
+
+        }
+
+
+        .cart-item-price {
+
+            font-weight: bold;
+
+        }
+
+
+        /* Existing Product Styles */
+
+        .product-list {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 20px;
+
+        }
+
+
+        .product {
+
+            border: 1px solid #ccc;
+
+            padding: 10px;
+
+            width: calc(33.333% - 20px); /* Three products per row */
+
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+        }
+
+
+        .product img {
+
+            max-width: 100%;
+
+            height: auto;
+
+        }
+
+
+        .product-actions {
+
+            display: flex;
+
+            align-items: center;
+
+            margin-top: 10px;
+
+        }
+
+
+        .quantity-input {
+
+            width: 50px;
+
+            margin-right: 10px;
+
+        }
+
+
+        .add-to-cart {
+
+            background-color: maroon;
+
+            color: rgb(97, 85, 85);
+
+            border: none;
+
+            padding: 10px 15px;
+
+            cursor: pointer;
+
+        }
+
+
+        .add-to-cart:hover {
+
+            background-color: rgb(139, 0, 0);
+
+        }
+
+
+        /* Footer Styles */
+
+        footer {
+
+            background-color: black;
+
+            color: rgb(49, 42, 42);
+
+            padding: 20px 0;
+
+            text-align: center;
+
+        }
+
+
+        .social-icons a {
+
+            margin: 0 10px;
+
+            color: rgb(109, 146, 23);
+
+            text-decoration: none;
+
+        }
+
+
+        .shop-now-button {
+
+            display: inline-block;
+
+            background-color: maroon;
+
+            color: rgb(163, 26, 26);
+
+            padding: 10px 15px;
+
+            text-decoration: none;
+
+            border-radius: 5px;
+
+            margin-top: 10px;
+
+        }
+
+
+        .shop-now-button:hover {
+
+            background-color: darkred;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="modal-overlay"></div>
+
+    
+
+    <!-- Navbar -->
+
+    <nav class="navbar">
+
+        <div class="container">
+
+            <h1 class="logo">*Mavazi*</h1>
+
+            <ul class="nav-links">
+                <form>
+                    <li><a href="products.html">Smart Deals!</a></li>
+                </form>
+
+                <form>
+
+                    <input type="search" placeholder="Search...">
+
+                    <button type="submit">Search product</button>
+
+                </form>
+
+                <div class="cart-container">
+
+                    <a href="#cart" class="cart-link">Cart (<span id="cart-count">0</span>)</a>
+
+                </div>
+
+            </ul>
+
+        </div>
+
+    </nav>
+
+
+    <!-- Home Header -->
+
+    <div class="home-header">
+
+        <div class="container">
+
+            <h1>GWAPAFFECTION-CLOTHING </h1>
+
+            <form>
+
+                <input type="text" placeholder="Search for products...">
+
+                <button type="submit">Search</button>
+
+                <div class="cart-container">
+
+                    <a href="#cart" class="cart-link">Cart (<span id="cart-count-2">0</span>)</a>
+
+                </div>
+
+            </form>
+
+            <p>Discover the latest trends in fashion .</p>
+
+            <a href="https://wa.me/0797389370" target="_blank" class="shop-now-button">Shop Now</a>
+
+        </div>
+
+    </div>
+<main>
+<div id="cart-sidebar" style="position: fixed; right: -400px; top: 0; width: 350px; height: 100%; background: white; transition: 0.3s ease-in-out; z-index: 2000; padding: 25px; box-shadow: -5px 0 15px rgba(0,0,0,0.3); overflow-y: auto; font-family: 'Times New Roman', serif;">
+        <button onclick="toggleCart()" style="float: right; cursor: pointer; background: maroon; color: white; border: none; padding: 8px 12px; border-radius: 5px;">Close</button>
+        <h2 style="color: black; margin-top: 0;">Shopping Cart</h2>
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+        
+        <div id="cart-display-area">
+            </div>
+
+        <div id="cart-footer" style="margin-top: 30px; border-top: 2px solid maroon; padding-top: 20px;">
+            </div>
+    </div>
+
+    <main style="margin-top: 100px;">
+        <div class="container">
+            <h2> MERCHANDISE</h2>
+            <div class="product-list">
+                <div class="product">
+                    <h3>GWAPAN-CUSTOM-PANTS</h3>
+                    <a href="https://ibb.co/sJ6173xj"><img src="https://i.ibb.co/NnmNRYDx/image0-1.jpg" alt="image0(1)" border="0"></a>
+                    <p class="price-tag">Price: SH. 1800</p>
+                    <div class="product-actions">
+                        <input type="number" min="1" value="1" class="quantity-input">
+                        <button onclick="addToCart('BAGGGY JEANS', 1800, this)" class="add-to-cart">Add to Cart</button>
+                    </div>
+                    <P>Available</P>
+                    <p>Top tier hard baggy jeans for a unique style.</p>
+                    <p>size 33,34,35,36,37</p>
+                </div>
+                <div class="product">
+                    <h3>GWAPAN-DENIM-SHIRT</h3>
+                    <a href="https://ibb.co/h1t6Kk8S"><img src="https://i.ibb.co/Z1kjh3T0/image0.jpg" alt="image0" border="0"></a>
+                    <p class="price-tag">Price: SH.1200</p>
+                    <div class="product-actions">
+                        <input type="number" min="1" value="1" class="quantity-input">
+                        <button onclick="addToCart('SHIRT', 1200, this)" class="add-to-cart">Add to Cart</button>
+
+                    </div>
+                    <P>Available</P>
+                    <p>A unique styled shirt handcrafted with passion</p>
+                    <p>size(BAGGY)</p>
+                    
+                </div>
+                <div class="product">
+                    <h3>GWAPAN-JORTS</h3>
+                    <a href="https://ibb.co/DDqGqm0q"><img src="https://i.ibb.co/xS4m4wx4/image3.jpg" alt="image3" border="0"></a>
+                    <p class="price-tag">Price: SH.1500</p>
+                    <div class="product-actions">
+                        <input type="number" min="1" value="1" class="quantity-input">
+                        <button onclick="addToCart('Jorts', 1500, this)" class="add-to-cart">Add to Cart</button>
+                    </div>
+                    <P>Available</P>
+                    <P>Unique hand-made-jorts</P>
+                    <P>size(34,35,36,37)</P>
+                </div>
+                <div class="product">
+                    <h3>GWAPAN-DENIM-KIT</h3>
+                    <a href="https://ibb.co/YFhmw6HC"><img src="https://i.ibb.co/sdqnzh8f/image1.jpg" alt="image1" border="0"></a>
+                    <p class="price-tag">Price: SH.3500</p>
+                    <div class="product-actions">
+                        <input type="number" min="1" value="1" class="quantity-input">
+                        <button onclick="addToCart('GWAPAN-DENIM-KIT', 3500, this)" class="add-to-cart">Add to Cart</button>
+                    </div>
+                    <p>Available</p>
+                    <p>Size(Baggy)</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Initialize Cart from storage
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        window.onload = function() {
+            updateCartCount();
+            renderCartItems();
+            
+            // Fix: Make sure all "Cart" links in nav open the sidebar
+            document.querySelectorAll('.cart-link').forEach(link => {
+                link.onclick = (e) => {
+                    e.preventDefault();
+                    toggleCart();
+                };
+            });
+        };
+
+        function toggleCart() {
+            const sidebar = document.getElementById('cart-sidebar');
+            sidebar.style.right = (sidebar.style.right === '0px') ? '-400px' : '0px';
+        }
+
+        function addToCart(name, price, button) {
+            const productDiv = button.closest('.product');
+            const qty = parseInt(productDiv.querySelector('.quantity-input').value) || 1;
+            const img = productDiv.querySelector('img').src;
+
+            const existing = cart.find(item => item.name === name);
+            if (existing) {
+                existing.quantity += qty;
+                existing.total = existing.quantity * price;
+            } else {
+                cart.push({ name, price, quantity: qty, total: price * qty, image: img });
+            }
+
+            saveAndUpdate();
+            // Optional: Auto-open sidebar when adding
+            document.getElementById('cart-sidebar').style.right = '0px';
+            renderCartItems();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            saveAndUpdate();
+            renderCartItems();
+        }
+
+        function saveAndUpdate() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const count1 = document.getElementById('cart-count');
+            const count2 = document.getElementById('cart-count-2');
+            if(count1) count1.innerText = count;
+            if(count2) count2.innerText = count;
+        }
+
+        function renderCartItems() {
+            const display = document.getElementById('cart-display-area');
+            const footer = document.getElementById('cart-footer');
+            display.innerHTML = '';
+
+            if (cart.length === 0) {
+                display.innerHTML = '<p style="text-align:center; color:#888;">Your cart is empty.</p>';
+                footer.innerHTML = '';
+                return;
+            }
+
+            let grandTotal = 0;
+            cart.forEach((item, index) => {
+                grandTotal += item.total;
+                display.innerHTML += `
+                    <div style="display:flex; align-items:center; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
+                        <img src="${item.image}" style="width:60px; border-radius:5px; margin-right:15px;">
+                        <div style="flex-grow:1;">
+                            <h4 style="margin:0; font-size:14px;">${item.name}</h4>
+                            <p style="margin:0; font-size:12px; color:maroon;">$${item.price} x ${item.quantity}</p>
+                        </div>
+                        <button onclick="removeFromCart(${index})" style="background:none; border:none; color:red; cursor:pointer; font-size:20px;">&times;</button>
+                    </div>
+                `;
+            });
+
+            footer.innerHTML = `
+                <div style="display:flex; justify-content:space-between; font-weight:bold; margin-bottom:15px;">
+                    <span>Grand Total:</span>
+                    <span>$${grandTotal.toFixed(2)}</span>
+                </div>
+                <button onclick="processCheckout(${grandTotal})" style="width:100%; padding:12px; background:maroon; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">
+                    Lipa na M-Pesa
+                </button>
+            `;
+        }
+async function processCheckout(total) {
+    const phone = prompt("Enter M-Pesa Number (e.g., 254712345678):");
+    const email = prompt("Enter your Email (This serves as your Member ID/Account Reference):");
+
+    // Validation: Ensure both fields are filled
+    if (!phone || !email) {
+        alert("Both phone and email are required to process payment.");
+        return;
+    }
+
+    try {
+        const response = await fetch('http://localhost:5000/api/mpesa-stk', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                phone: phone.trim(), 
+                amount: Math.round(total), 
+                memberId: email.trim() 
+            })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            alert("Success! Please check your phone for the M-Pesa PIN prompt.");
+        } else {
+            alert("Checkout failed: " + (result.message || "Unknown error"));
+        }
+    } catch (e) {
+        console.error("Connection Error:", e);
+        alert("Server error. Please ensure your Node.js backend and Ngrok are running.");
+    }
+}
+
+
+        // async function processCheckout(total) {
+        //     const phone = prompt("Enter M-Pesa Number (254...):");
+        //    // const email = prompt("Enter your Email (Member ID):");
+        //     if (!phone || !email) return;
+
+        //     try {
+        //         const response = await fetch('http://localhost:5000/api/mpesa-stk', {
+        //             method: 'POST',
+        //             headers: { 'Content-Type': 'application/json' },
+        //             body: JSON.stringify({ phone, amount: Math.round(total), memberId: email })
+        //         });
+        //         if (response.ok) alert("Payment request sent to your phone!");
+        //         else alert("Checkout failed. Check server.");
+        //     } catch (e) {
+        //         alert("Server error. Is your Node.js app running?");
+        //     }
+        // }
+    </script>
+        <!-- Main content goes here -->
+
+    </main>
+
+   
+
+ <footer>
+
+        <div class="container">
+
+            <p>© 2025  Powered by Gaia</p>
+
+            <div class="social-icons">
+
+                <a href="https://www.instagram.com/_.gaia.ix" target="_blank"><i class="fab fa-instagram"></i></a>
+
+                <a href="https ://telegram.me/yourprofile" target="_blank"><i class="fab fa-telegram"></i></a>
+
+                <a href="https://twitter.com/yourprofile" target="_blank"><i class="fab fa-twitter"></i></a>
+
+                <a href="https://www.facebook.com/yourprofile" target="_blank"><i class="fab fa-facebook"></i></a>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+</body>
+
+
+</html> 
