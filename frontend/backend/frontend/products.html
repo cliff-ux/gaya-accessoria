@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Product Merchendise</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: serif;
+            margin: 20px;
+            background-color: #f17815;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 0px;
+            color: #000000;
+            
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 20px 0;
+            border: 1px solid #661010;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            background-color: antiquewhite;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(199, 58, 58, 0.1);
+        }
+        img {
+            margin-right: 20px;
+            border-radius: 5px;
+            width: 150px;
+            height: 150px;
+        }
+        p {
+            margin: 0;
+            font-size: 16px;
+            color: #245a05;
+        }
+    </style>
+    <script>
+        function promptForPayment() {
+            const mobileNumber = prompt("Please enter your mobile number:");
+            if (mobileNumber) {
+                const mpesaPin = prompt("Please enter your M-Pesa PIN:");
+                if (mpesaPin) {
+                    alert("Thank you! Your order has been placed.");
+                    // Here you can add code to handle the payment process
+                } else {
+                    alert("M-Pesa PIN is required.");
+                }
+            } else {
+                alert("Mobile number is required.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Limited Merchendise</h1>
+
+    <ul>
+        <li>
+            <a href="https://ibb.co/Y4WpPhYW"><img src="https://i.ibb.co/zW5GQZj5/image1-1.jpg" alt="image1-1" border="0"></a>
+            <div>
+                <p>GWAPAN-CAPS - SH.900 </p>
+                <form>
+                    <input type="number" id="quantity" name="quantity" value="1">
+                </form>
+                <button onclick="promptForPayment()">Buy Now</button>  
+                <p>
+                    - CAP authenticity approved by GAIA
+                </p>
+            </div>
+        </li>
+            </div>
+        </li>
+    </ul>
+
+    <ul>
+        <li>
+            <a href="https://ibb.co/VcKRCQf0"><img src="https://i.ibb.co/1tS1XdFY/image0-3.jpg" alt="image0(3)" border="0"></a>
+            <div>
+                <p>GWAPAN-TANK-TOPS - SH.750 </p>
+                <form>
+                    <input type="number" id="quantity" name="quantity" value="1">
+                </form>
+                <button onclick="promptForPayment()">Buy Now</button>  
+                <p>
+                    - Tops authenticity approved by GAIA
+                </p>
+            </div>
+        </li>
+            </div>
+        </li>
+    </ul>
+</body>
+</html>
