@@ -139,10 +139,11 @@ app.post('/api/mpesa-callback', (req, res) => {
     res.status(200).send("OK");
 });
 
-const PORT = process.env.PORT || 5000;
+// Keep only this one at the very bottom of the file
+const PORT = process.env.PORT || 10000; 
+
 app.listen(PORT, () => {
     console.log(`-----------------------------------------`);
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
-    console.log(`🛡️  CORS Enabled | M-Pesa Environment: Sandbox`);
+    console.log(`🚀 Server running on port ${PORT}`);
     console.log(`-----------------------------------------`);
 });
