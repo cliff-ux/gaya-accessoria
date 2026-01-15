@@ -1,5 +1,4 @@
 require('dotenv').config();
-console.log("Check Key:", process.env.MPESA_CONSUMER_KEY);
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
@@ -7,8 +6,11 @@ const cors = require('cors');
 const app = express();
 
 // Middleware
+// We declare and use CORS only once here to prevent the "Identifier already declared" error.
+app.use(cors()); 
 app.use(express.json());
-app.use(cors());
+
+console.log("Check Key:", process.env.MPESA_CONSUMER_KEY ? "FOUND" : "MISSING");
 
 // --- HELPER FUNCTIONS ---
 
@@ -44,7 +46,6 @@ const getAccessToken = async () => {
         return response.data.access_token;
     } catch (error) {
         if (error.response) {
-            // This prints the specific error from Safaricom (e.g., Invalid Client)
             console.error("❌ Safaricom Auth Error:", error.response.data);
         } else {
             console.error("❌ Network Error:", error.message);
@@ -59,17 +60,14 @@ const getAccessToken = async () => {
 app.post('/api/mpesa-stk', async (req, res) => {
     let { phone, amount, memberId } = req.body;
 
-    // 1. Validation
     if (!phone || !amount) {
         return res.status(400).json({ message: "Phone and Amount are required" });
     }
 
-    // 2. Format phone: Change 07... or +254... to 2547...
-    let cleanPhone = phone.replace(/\D/g, ''); // Remove non-digits
+    // Format phone: Change 07... or +254... to 2547...
+    let cleanPhone = phone.replace(/\D/g, ''); 
     if (cleanPhone.startsWith('0')) {
         cleanPhone = '254' + cleanPhone.substring(1);
-    } else if (cleanPhone.startsWith('4')) {
-        // Already starts with 254... (if they typed 254)
     }
 
     try {
@@ -78,7 +76,6 @@ app.post('/api/mpesa-stk', async (req, res) => {
         const token = await getAccessToken();
         const timestamp = getTimestamp();
         
-        // 3. Generate Password (Shortcode + Passkey + Timestamp)
         const password = Buffer.from(
             process.env.MPESA_SHORTCODE + process.env.MPESA_PASSKEY + timestamp
         ).toString('base64');
@@ -88,7 +85,7 @@ app.post('/api/mpesa-stk', async (req, res) => {
             Password: password,
             Timestamp: timestamp,
             TransactionType: "CustomerPayBillOnline",
-            Amount: Math.round(amount), // Ensure it's an integer
+            Amount: Math.round(amount),
             PartyA: cleanPhone,
             PartyB: process.env.MPESA_SHORTCODE,
             PhoneNumber: cleanPhone,
@@ -113,11 +110,9 @@ app.post('/api/mpesa-stk', async (req, res) => {
     }
 });
 
-// Callback Route (Where Safaricom sends the result)
+// Callback Route
 app.post('/api/mpesa-callback', (req, res) => {
     console.log("--- 🔔 Payment Callback Received ---");
-    
-    // Safaricom sends data in a nested body
     const callbackData = req.body.Body?.stkCallback;
     
     if (!callbackData) {
@@ -131,7 +126,6 @@ app.post('/api/mpesa-callback', (req, res) => {
         const metadata = callbackData.CallbackMetadata.Item;
         const mpesaReceipt = metadata.find(item => item.Name === 'MpesaReceiptNumber').Value;
         console.log(`✅ SUCCESS: Transaction ${mpesaReceipt} confirmed.`);
-        // TODO: Update your database/send email here
     } else {
         console.log(`❌ FAILED/CANCELLED: Code ${callbackData.ResultCode}`);
     }
@@ -139,7 +133,7 @@ app.post('/api/mpesa-callback', (req, res) => {
     res.status(200).send("OK");
 });
 
-// Keep only this one at the very bottom of the file
+// Port Handling
 const PORT = process.env.PORT || 10000; 
 
 app.listen(PORT, () => {
