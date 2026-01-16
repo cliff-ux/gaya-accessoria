@@ -7,220 +7,44 @@
     <title>GWAPAFFECTION-CLOTHING</title>
     <style>
         /* --- General Reset --- */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Times New Roman', Times, serif;
-            background-color: #f4f4f4;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Times New Roman', Times, serif; background-color: #f4f4f4; line-height: 1.6; overflow-x: hidden; }
 
         /* --- Responsive Navbar --- */
-        .navbar {
-            background-color: black;
-            padding: 10px 0;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-
-        .navbar .container {
-            width: 95%;
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: maroon;
-            text-decoration: none;
-            letter-spacing: 1px;
-        }
-
-        .nav-links {
-            list-style: none;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .nav-links a {
-            color: #f4f4f4;
-            text-decoration: none;
-            font-weight: bold;
-            padding: 5px 10px;
-            transition: 0.3s;
-            font-size: 16px;
-        }
-
-        .nav-links a:hover {
-            color: red;
-        }
-
-        .nav-search {
-            display: flex;
-            gap: 5px;
-        }
-
-        .nav-search input {
-            padding: 8px;
-            border-radius: 4px;
-            border: none;
-            outline: none;
-            width: 180px;
-            font-family: inherit;
-        }
+        .navbar { background-color: black; padding: 10px 0; position: fixed; top: 0; width: 100%; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .navbar .container { width: 95%; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo { font-size: 24px; font-weight: bold; color: maroon; text-decoration: none; letter-spacing: 1px; }
+        .nav-links { list-style: none; display: flex; align-items: center; gap: 15px; flex-wrap: wrap; justify-content: center; }
+        .nav-links a { color: #f4f4f4; text-decoration: none; font-weight: bold; padding: 5px 10px; transition: 0.3s; font-size: 16px; }
+        .nav-links a:hover { color: red; }
+        .nav-search input { padding: 8px; border-radius: 4px; border: none; outline: none; width: 180px; font-family: inherit; }
 
         /* --- Hero Header --- */
-        .home-header {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://www.icebox.com/themes/default/frontend/oct-2023/assets/avif/homebanner-accessories.avif');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 140px 20px 60px;
-            text-align: center;
-        }
+        .home-header { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://www.icebox.com/themes/default/frontend/oct-2023/assets/avif/homebanner-accessories.avif'); background-size: cover; background-position: center; color: white; padding: 140px 20px 60px; text-align: center; }
+        .home-header h1 { font-size: clamp(1.8rem, 5vw, 3rem); margin-bottom: 15px; }
+        .shop-now-button { display: inline-block; background-color: maroon; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; margin-top: 20px; font-weight: bold; transition: 0.3s; }
 
-        .home-header h1 {
-            font-size: clamp(1.8rem, 5vw, 3rem);
-            margin-bottom: 15px;
-        }
-
-        .shop-now-button {
-            display: inline-block;
-            background-color: maroon;
-            color: white;
-            padding: 12px 25px;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 20px;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
-        /* --- Product Grid (Responsive) --- */
-        .product-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 25px;
-            justify-content: center;
-            padding: 40px 0;
-        }
-
-        .product {
-            background: white;
-            border: 1px solid #ddd;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            flex: 1 1 300px; 
-            max-width: 350px;
-            text-align: center;
-            transition: transform 0.3s;
-        }
-
-        /* Search Highlight effect */
-        .product.hidden {
-            display: none;
-        }
-
-        .product:hover {
-            transform: translateY(-5px);
-        }
-
-        .product img {
-            width: 100%;
-            height: 320px;
-            object-fit: cover;
-            border-radius: 5px;
-            margin-bottom: 15px;
-        }
-
-        .price-tag {
-            font-weight: bold;
-            color: maroon;
-            font-size: 1.2rem;
-            margin: 10px 0;
-        }
-
-        .add-to-cart {
-            background-color: maroon;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-weight: bold;
-            width: 100%;
-            transition: 0.3s;
-        }
-
-        .add-to-cart:hover {
-            background-color: #800000;
-        }
+        /* --- Product Grid --- */
+        .product-list { display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; padding: 40px 0; }
+        .product { background: white; border: 1px solid #ddd; padding: 15px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); flex: 1 1 300px; max-width: 350px; text-align: center; transition: transform 0.3s; }
+        .product.hidden { display: none; }
+        .product:hover { transform: translateY(-5px); }
+        .product img { width: 100%; height: 320px; object-fit: cover; border-radius: 5px; margin-bottom: 15px; }
+        .price-tag { font-weight: bold; color: maroon; font-size: 1.2rem; margin: 10px 0; }
+        .add-to-cart { background-color: maroon; color: white; border: none; padding: 12px 20px; cursor: pointer; border-radius: 5px; font-weight: bold; width: 100%; transition: 0.3s; }
+        .add-to-cart:hover { background-color: #800000; }
 
         /* --- Sidebar Cart --- */
-        #cart-sidebar {
-            position: fixed;
-            right: -400px;
-            top: 0;
-            width: 100%;
-            max-width: 380px;
-            height: 100%;
-            background: white;
-            transition: 0.4s ease-in-out;
-            z-index: 2000;
-            padding: 25px;
-            box-shadow: -5px 0 15px rgba(0,0,0,0.3);
-            overflow-y: auto;
-        }
+        #cart-sidebar { position: fixed; right: -400px; top: 0; width: 100%; max-width: 380px; height: 100%; background: white; transition: 0.4s ease-in-out; z-index: 2000; padding: 25px; box-shadow: -5px 0 15px rgba(0,0,0,0.3); overflow-y: auto; }
+        
+        /* Checkout Form inside Cart */
+        .checkout-form { margin-top: 20px; padding: 15px; background: #f9f9f9; border-radius: 8px; border: 1px solid #eee; }
+        .checkout-form input { width: 100%; padding: 10px; margin: 5px 0 15px; border: 1px solid #ccc; border-radius: 4px; }
 
-        /* --- Footer --- */
-        footer {
-            background-color: black;
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-            margin-top: 50px;
-        }
+        footer { background-color: black; color: white; padding: 40px 20px; text-align: center; margin-top: 50px; }
+        .social-icons a { color: white; font-size: 24px; margin: 0 10px; transition: 0.3s; }
 
-        .social-icons a {
-            color: white;
-            font-size: 24px;
-            margin: 0 10px;
-            transition: 0.3s;
-        }
-
-        /* --- Mobile Tweaks --- */
-        @media (max-width: 768px) {
-            .navbar .container {
-                flex-direction: column;
-                gap: 15px;
-            }
-            .nav-search input {
-                width: 100%;
-            }
-            .home-header {
-                padding-top: 180px;
-            }
-            .product {
-                flex: 1 1 100%;
-            }
-        }
+        @media (max-width: 768px) { .navbar .container { flex-direction: column; gap: 15px; } .nav-search input { width: 100%; } .home-header { padding-top: 180px; } .product { flex: 1 1 100%; } }
     </style>
 </head>
 <body>
@@ -230,12 +54,8 @@
             <a href="#" class="logo">*Mavazi*</a>
             <ul class="nav-links">
                 <li><a href="#">Smart Deals!</a></li>
-                <li>
-                    <div class="nav-search">
-                        <input type="text" id="productSearch" placeholder="Search merchandise..." onkeyup="filterProducts()">
-                    </div>
-                </li>
-                <li><a href="#" class="cart-link">Cart (<span id="cart-count">0</span>)</a></li>
+                <li><div class="nav-search"><input type="text" id="productSearch" placeholder="Search merchandise..." onkeyup="filterProducts()"></div></li>
+                <li><a href="#" onclick="toggleCart()" class="cart-link">Cart (<span id="cart-count">0</span>)</a></li>
             </ul>
         </div>
     </nav>
@@ -261,9 +81,7 @@
                     <input type="number" min="1" value="1" class="quantity-input" style="width: 50px; padding: 5px;">
                     <button onclick="addToCart('CUSTOM PANTS', 1800, this)" class="add-to-cart" style="width: auto;">Add to Cart</button>
                 </div>
-                <p><small>Size: 33, 34, 35, 36, 37 (Baggy Fit)</small></p>
             </div>
-
             <div class="product">
                 <h3 class="product-name">GWAPAN-DENIM-SHIRT</h3>
                 <img src="https://i.ibb.co/Z1kjh3T0/image0.jpg" alt="Shirt">
@@ -272,9 +90,7 @@
                     <input type="number" min="1" value="1" class="quantity-input" style="width: 50px; padding: 5px;">
                     <button onclick="addToCart('DENIM SHIRT', 1200, this)" class="add-to-cart" style="width: auto;">Add to Cart</button>
                 </div>
-                <p><small>Baggy Handcrafted Denim</small></p>
             </div>
-
             <div class="product">
                 <h3 class="product-name">GWAPAN-JORTS</h3>
                 <img src="https://i.ibb.co/xS4m4wx4/image3.jpg" alt="Jorts">
@@ -283,18 +99,6 @@
                     <input type="number" min="1" value="1" class="quantity-input" style="width: 50px; padding: 5px;">
                     <button onclick="addToCart('JORTS', 1500, this)" class="add-to-cart" style="width: auto;">Add to Cart</button>
                 </div>
-                <p><small>Unique Hand-made (Size: 34-37)</small></p>
-            </div>
-
-            <div class="product">
-                <h3 class="product-name">GWAPAN-DENIM-KIT</h3>
-                <img src="https://i.ibb.co/sdqnzh8f/image1.jpg" alt="Kit">
-                <p class="price-tag">SH. 3500</p>
-                <div style="margin-bottom: 15px;">
-                    <input type="number" min="1" value="1" class="quantity-input" style="width: 50px; padding: 5px;">
-                    <button onclick="addToCart('DENIM KIT', 3500, this)" class="add-to-cart" style="width: auto;">Add to Cart</button>
-                </div>
-                <p><small>Full Custom Denim Kit</small></p>
             </div>
         </div>
     </main>
@@ -303,54 +107,50 @@
         <button onclick="toggleCart()" style="float: right; cursor: pointer; background: maroon; color: white; border: none; padding: 8px 12px; border-radius: 5px;">Close</button>
         <h2 style="margin-bottom: 20px; border-bottom: 2px solid maroon; padding-bottom: 10px;">Your Cart</h2>
         <div id="cart-display-area"></div>
-        <div id="cart-footer"></div>
+        
+        <div id="checkout-section">
+            <div class="checkout-form">
+                <label>M-Pesa Number:</label>
+                <input type="text" id="mpesa-phone" placeholder="2547XXXXXXXX" required>
+                <label>Email Address:</label>
+                <input type="email" id="customer-email" placeholder="your@email.com" required>
+            </div>
+            <div id="cart-footer"></div>
+        </div>
     </div>
 
     <footer>
-        <div class="container">
-            <p>© 2025 GWAPAFFECTION-CLOTHING | Powered by Gaia</p>
-            <div class="social-icons" style="margin-top: 20px;">
-                <a href="https://www.instagram.com/_.gaia.ix" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
-            </div>
-        </div>
+        <p>© 2026 GWAPAFFECTION-CLOTHING | Powered by Gaia</p>
     </footer>
 
     <script>
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const API_URL = "https://gaya-backend.onrender.com/api/mpesa-stk";
 
         window.onload = function() {
             updateCartCount();
             renderCartItems();
-            document.querySelectorAll('.cart-link').forEach(link => {
-                link.onclick = (e) => { e.preventDefault(); toggleCart(); };
-            });
         };
 
-        // --- Live Search Logic ---
-        function filterProducts() {
-            const input = document.getElementById('productSearch').value.toUpperCase();
-            const grid = document.getElementById('productGrid');
-            const products = grid.getElementsByClassName('product');
-            let visibleCount = 0;
-
-            for (let i = 0; i < products.length; i++) {
-                const name = products[i].getElementsByClassName('product-name')[0].innerText;
-                if (name.toUpperCase().indexOf(input) > -1) {
-                    products[i].classList.remove('hidden');
-                    visibleCount++;
-                } else {
-                    products[i].classList.add('hidden');
-                }
-            }
-            document.getElementById('noResults').style.display = visibleCount === 0 ? 'block' : 'none';
-        }
-
-        // --- Cart Logic ---
         function toggleCart() {
             const sidebar = document.getElementById('cart-sidebar');
-            sidebar.style.right = (sidebar.style.right === '0px') ? '-400px' : '0px';
+            sidebar.style.right = (sidebar.style.right === '0px' || sidebar.style.right === '') ? '-400px' : '0px';
+        }
+
+        function filterProducts() {
+            const input = document.getElementById('productSearch').value.toUpperCase();
+            const products = document.getElementsByClassName('product');
+            let visibleCount = 0;
+            Array.from(products).forEach(p => {
+                const name = p.querySelector('.product-name').innerText;
+                if (name.toUpperCase().includes(input)) {
+                    p.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    p.classList.add('hidden');
+                }
+            });
+            document.getElementById('noResults').style.display = visibleCount === 0 ? 'block' : 'none';
         }
 
         function addToCart(name, price, button) {
@@ -381,53 +181,75 @@
         }
 
         function updateCartCount() {
-            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-            document.getElementById('cart-count').innerText = count;
+            document.getElementById('cart-count').innerText = cart.reduce((sum, item) => sum + item.quantity, 0);
         }
 
         function renderCartItems() {
             const display = document.getElementById('cart-display-area');
             const footer = document.getElementById('cart-footer');
+            const checkoutSection = document.getElementById('checkout-section');
             display.innerHTML = '';
+
             if (cart.length === 0) {
-                display.innerHTML = '<p style="text-align:center; margin-top:20px; color: #999;">Cart is currently empty.</p>';
-                footer.innerHTML = '';
+                display.innerHTML = '<p style="text-align:center; margin-top:20px;">Cart is empty.</p>';
+                checkoutSection.style.display = 'none';
                 return;
             }
+
+            checkoutSection.style.display = 'block';
             let grandTotal = 0;
             cart.forEach((item, index) => {
                 grandTotal += item.total;
                 display.innerHTML += `
-                    <div style="display:flex; align-items:center; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
-                        <img src="${item.image}" style="width:50px; height:50px; object-fit:cover; border-radius:5px; margin-right:10px;">
+                    <div style="display:flex; align-items:center; margin-bottom:10px; border-bottom:1px solid #eee; padding-bottom:5px;">
+                        <img src="${item.image}" style="width:40px; height:40px; object-fit:cover; margin-right:10px;">
                         <div style="flex-grow:1;">
-                            <h4 style="margin:0; font-size:14px;">${item.name}</h4>
-                            <p style="margin:0; font-size:12px; color:maroon;">SH ${item.price} x ${item.quantity}</p>
+                            <h4 style="font-size:13px; margin:0;">${item.name}</h4>
+                            <p style="font-size:12px; color:maroon;">SH ${item.price} x ${item.quantity}</p>
                         </div>
-                        <button onclick="removeFromCart(${index})" style="background:none; border:none; color:red; cursor:pointer; font-size:18px;">&times;</button>
+                        <button onclick="removeFromCart(${index})" style="border:none; color:red; cursor:pointer;">&times;</button>
                     </div>`;
             });
+
             footer.innerHTML = `
-                <div style="margin-top: 20px; border-top: 2px solid #f4f4f4; padding-top: 15px;">
-                    <h3 style="display:flex; justify-content:space-between;"><span>Total:</span> <span>SH ${grandTotal}</span></h3>
-                    <button onclick="processCheckout(${grandTotal})" style="width:100%; padding:15px; background:maroon; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:bold; margin-top: 15px;">Lipa na M-Pesa</button>
-                </div>`;
+                <h3 style="display:flex; justify-content:space-between; margin-top:15px;">Total: <span>SH ${grandTotal}</span></h3>
+                <button id="pay-btn" onclick="processCheckout(${grandTotal})" style="width:100%; padding:15px; background:maroon; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:bold; margin-top:15px;">Lipa na M-Pesa</button>
+            `;
         }
 
         async function processCheckout(total) {
-            const phone = prompt("Enter M-Pesa Number (254...):");
-            const email = prompt("Enter Email (For reference):");
-            if (!phone || !email) return;
+            const phone = document.getElementById('mpesa-phone').value;
+            const email = document.getElementById('customer-email').value;
+            const payBtn = document.getElementById('pay-btn');
+
+            if (!phone || !email) {
+                alert("Please fill in both phone and email.");
+                return;
+            }
+
+            payBtn.innerText = "Processing...";
+            payBtn.disabled = true;
+
             try {
-                const response = await fetch('http://localhost:10000/api/mpesa-stk', {
+                const response = await fetch(API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ phone, amount: Math.round(total), memberId: email })
                 });
-                if (response.ok) alert("STK Prompt sent! Please check your phone.");
-                else alert("Connection error. Ensure your backend is running.");
+
+                if (response.ok) {
+                    localStorage.removeItem('cart'); // Clear cart on success
+                    window.location.href = "success.html"; 
+                } else {
+                    const error = await response.json();
+                    alert("Error: " + (error.message || "Could not initiate payment. Check number format."));
+                    payBtn.innerText = "Lipa na M-Pesa";
+                    payBtn.disabled = false;
+                }
             } catch (e) {
-                alert("Error: Check your internet and server connection.");
+                alert("Server Connection Error. Is your backend awake?");
+                payBtn.innerText = "Lipa na M-Pesa";
+                payBtn.disabled = false;
             }
         }
     </script>
