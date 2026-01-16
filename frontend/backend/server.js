@@ -7,6 +7,9 @@ const app = express();
 app.use(cors()); 
 app.use(express.json());
 
+// Temporary memory store for transactions (Resets when server restarts)
+let transactionHistory = [];
+
 // --- HELPER FUNCTIONS ---
 
 const getTimestamp = () => {
@@ -34,14 +37,17 @@ const getAccessToken = async () => {
 
 // --- ROUTES ---
 
-// Health check for Render
 app.get('/', (req, res) => res.send("🚀 Gaya Backend is Live and Ready!"));
+
+// New route to send the history to your Admin view
+app.get('/api/transactions', (req, res) => {
+    res.json(transactionHistory);
+});
 
 // 1. INITIATE STK PUSH
 app.post('/api/mpesa-stk', async (req, res) => {
     let { phone, amount, memberId } = req.body;
     
-    // Clean phone number format
     let cleanPhone = phone.replace(/\D/g, ''); 
     if (cleanPhone.startsWith('0')) cleanPhone = '254' + cleanPhone.substring(1);
 
@@ -87,9 +93,23 @@ app.post('/api/mpesa-callback', (req, res) => {
 
     if (callbackData.ResultCode === 0) {
         const metadata = callbackData.CallbackMetadata.Item;
+        
+        // Extract data to save to history
         const receipt = metadata.find(i => i.Name === 'MpesaReceiptNumber').Value;
-        console.log(`✅ SUCCESS: Transaction ${receipt} confirmed.`);
-        // Here is where you would normally update a database
+        const amount = metadata.find(i => i.Name === 'Amount').Value;
+        const phone = metadata.find(i => i.Name === 'PhoneNumber').Value;
+
+        const newSale = {
+            receipt,
+            amount,
+            phone,
+            date: new Date().toLocaleString('en-KE', { timeZone: 'Africa/Nairobi' })
+        };
+
+        // Add to our history list
+        transactionHistory.push(newSale);
+        
+        console.log(`✅ SUCCESS: Transaction ${receipt} confirmed and saved to history.`);
     } else {
         console.log(`❌ FAILED/CANCELLED: ${callbackData.ResultDesc}`);
     }
