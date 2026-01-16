@@ -4,17 +4,11 @@ const axios = require('axios');
 const cors = require('cors');
 
 const app = express();
-
-// Middleware
-// We declare and use CORS only once here to prevent the "Identifier already declared" error.
 app.use(cors()); 
 app.use(express.json());
 
-console.log("Check Key:", process.env.MPESA_CONSUMER_KEY ? "FOUND" : "MISSING");
-
 // --- HELPER FUNCTIONS ---
 
-// 1. Generate M-Pesa Timestamp (YYYYMMDDHHMMSS)
 const getTimestamp = () => {
     const date = new Date();
     return date.getFullYear() +
@@ -25,60 +19,36 @@ const getTimestamp = () => {
         ("0" + date.getSeconds()).slice(-2);
 };
 
-// 2. Get Access Token from Safaricom with Detailed Logging
 const getAccessToken = async () => {
-    const consumerKey = process.env.MPESA_CONSUMER_KEY;
-    const consumerSecret = process.env.MPESA_CONSUMER_SECRET;
-
-    if (!consumerKey || !consumerSecret) {
-        console.error("❌ ERROR: MPESA_CONSUMER_KEY or SECRET is missing in .env file");
-        throw new Error("Missing M-Pesa Credentials");
-    }
-
-    const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString('base64');
-
+    const auth = Buffer.from(`${process.env.MPESA_CONSUMER_KEY}:${process.env.MPESA_CONSUMER_SECRET}`).toString('base64');
     try {
         const response = await axios.get(
             'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials',
             { headers: { Authorization: `Basic ${auth}` } }
         );
-        console.log("✅ Access Token Obtained Successfully");
         return response.data.access_token;
     } catch (error) {
-        if (error.response) {
-            console.error("❌ Safaricom Auth Error:", error.response.data);
-        } else {
-            console.error("❌ Network Error:", error.message);
-        }
-        throw new Error("Failed to get Access Token");
+        throw new Error("Failed to get M-Pesa Access Token");
     }
 };
 
 // --- ROUTES ---
 
-// Main STK Push Route
+// Health check for Render
+app.get('/', (req, res) => res.send("🚀 Gaya Backend is Live and Ready!"));
+
+// 1. INITIATE STK PUSH
 app.post('/api/mpesa-stk', async (req, res) => {
     let { phone, amount, memberId } = req.body;
-
-    if (!phone || !amount) {
-        return res.status(400).json({ message: "Phone and Amount are required" });
-    }
-
-    // Format phone: Change 07... or +254... to 2547...
+    
+    // Clean phone number format
     let cleanPhone = phone.replace(/\D/g, ''); 
-    if (cleanPhone.startsWith('0')) {
-        cleanPhone = '254' + cleanPhone.substring(1);
-    }
+    if (cleanPhone.startsWith('0')) cleanPhone = '254' + cleanPhone.substring(1);
 
     try {
-        console.log(`🚀 Initiating STK Push for ${cleanPhone}...`);
-        
         const token = await getAccessToken();
         const timestamp = getTimestamp();
-        
-        const password = Buffer.from(
-            process.env.MPESA_SHORTCODE + process.env.MPESA_PASSKEY + timestamp
-        ).toString('base64');
+        const password = Buffer.from(process.env.MPESA_SHORTCODE + process.env.MPESA_PASSKEY + timestamp).toString('base64');
 
         const payload = {
             BusinessShortCode: process.env.MPESA_SHORTCODE,
@@ -100,48 +70,32 @@ app.post('/api/mpesa-stk', async (req, res) => {
             { headers: { Authorization: `Bearer ${token}` } }
         );
 
-        console.log("✅ STK Push Request Sent:", response.data);
+        console.log("✅ STK Push Prompt Sent to:", cleanPhone);
         res.status(200).json(response.data);
-
     } catch (error) {
-        const errorData = error.response ? error.response.data : error.message;
-        console.error("❌ STK Push Error:", errorData);
-        res.status(500).json({ message: "STK Push failed", error: errorData });
+        console.error("❌ STK Push Error:", error.response ? error.response.data : error.message);
+        res.status(500).json({ error: "STK Push failed" });
     }
 });
 
-// Callback Route
-app.get('/', (req, res) => {
-    res.send("🚀 Gaya Accessories API is running perfectly!");
-});
-
+// 2. CALLBACK ROUTE (Safaricom calls this)
 app.post('/api/mpesa-callback', (req, res) => {
     console.log("--- 🔔 Payment Callback Received ---");
     const callbackData = req.body.Body?.stkCallback;
     
-    if (!callbackData) {
-        console.error("Invalid Callback Data received");
-        return res.status(400).send("Invalid Data");
-    }
-
-    console.log("Result Message:", callbackData.ResultDesc);
+    if (!callbackData) return res.status(400).send("No data");
 
     if (callbackData.ResultCode === 0) {
         const metadata = callbackData.CallbackMetadata.Item;
-        const mpesaReceipt = metadata.find(item => item.Name === 'MpesaReceiptNumber').Value;
-        console.log(`✅ SUCCESS: Transaction ${mpesaReceipt} confirmed.`);
+        const receipt = metadata.find(i => i.Name === 'MpesaReceiptNumber').Value;
+        console.log(`✅ SUCCESS: Transaction ${receipt} confirmed.`);
+        // Here is where you would normally update a database
     } else {
-        console.log(`❌ FAILED/CANCELLED: Code ${callbackData.ResultCode}`);
+        console.log(`❌ FAILED/CANCELLED: ${callbackData.ResultDesc}`);
     }
 
-    res.status(200).send("OK");
+    res.status(200).json({ ResultCode: 0, ResultDesc: "Accepted" });
 });
 
-// Port Handling
 const PORT = process.env.PORT || 10000; 
-
-app.listen(PORT, () => {
-    console.log(`-----------------------------------------`);
-    console.log(`🚀 Server running on port ${PORT}`);
-    console.log(`-----------------------------------------`);
-});
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
