@@ -111,6 +111,10 @@ app.post('/api/mpesa-stk', async (req, res) => {
 });
 
 // Callback Route
+app.get('/', (req, res) => {
+    res.send("🚀 Gaya Accessories API is running perfectly!");
+});
+
 app.post('/api/mpesa-callback', (req, res) => {
     console.log("--- 🔔 Payment Callback Received ---");
     const callbackData = req.body.Body?.stkCallback;
